@@ -14,7 +14,7 @@ interface Props {
   params: Promise<{ activitiesId: string }>
 }
 
-export const configSection = {
+const configSection = {
   bgColorClassName: "bg-[#230700]",
   bannerClassName: "h-[950px]",
   bannerTitleClassName: "w-[750px] h-[250px] top-[30px]",
