@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development next dev --turbopack",
-    "build:test": "cross-env NODE_ENV=test next build && npm run compress-images",
-    "build": "next build && npm run compress-images",
+    "build:test": "npm run compress-images && cross-env NODE_ENV=test next build",
+    "build": "npm run compress-images && next build",
     "start": "next start",
     "lint": "next lint",
     "translations": "node src/scripts/downloadTranslations.mjs",
