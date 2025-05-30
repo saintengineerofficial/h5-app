@@ -49,7 +49,7 @@ const RewardGroup = ({ rewards, rewardItemConfig, displayLayout }: Props) => {
         return (
           <Grid.Item key={reward.id} className='flex-col'>
             <BackgroundSection imagePath={rewardItemConfig.backgroundImage} className={twMerge('w-[200px] h-[200px]', rewardItemConfig.backgroundImageClassName)}>
-              <InternalImage src={reward.cover} alt="rewardBackgroundImage" clasName={rewardItemConfig.rewardImageClassName} />
+              <InternalImage src={reward.cover} alt="rewardBackgroundImage" className={rewardItemConfig.rewardImageClassName} />
             </BackgroundSection>
             <div className={twMerge(`${finalWidth} text-center break-words whitespace-normal text-[24px] text-white`,
               rewardItemConfig.rewardNameClassName)}>

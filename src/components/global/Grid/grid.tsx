@@ -27,6 +27,7 @@ const Grid = ({ children, columns, rows, itemPositions, gap, className }: PropsW
       columnGap: px2vw(10),
       gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
       gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
+      alignItems: 'start'
     }
 
     if (gap) {
@@ -41,7 +42,7 @@ const Grid = ({ children, columns, rows, itemPositions, gap, className }: PropsW
     }
 
     return tempStyle
-  }, [columns, gap, className])
+  }, [className, columns, rows, gap])
 
   const wrappedChildren = useMemo(() => {
     if (itemPositions && React.Children.count(children) > 0) {
@@ -64,7 +65,7 @@ const Grid = ({ children, columns, rows, itemPositions, gap, className }: PropsW
       });
     }
     return children;
-  }, [children, columns, itemPositions]);
+  }, [children, itemPositions]);
 
   return (
     <div className={twMerge(`grid`, className)} style={style}>

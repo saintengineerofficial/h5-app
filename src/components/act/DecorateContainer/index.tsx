@@ -38,16 +38,17 @@ const DecorateContainer = ({
   className
 }: PropsWithChildren<Props>) => {
 
+  // 计算最小高度
   const finalMinHeight = useMemo(() => {
     const topSectionHeight = getCssWHNumber('h', topSection.className);
     const middleSectionHeight = getCssWHNumber('h', middleSection.className);
     const bottomSectionHeight = getCssWHNumber('h', bottomSection.className);
 
     return px2vw(topSectionHeight + middleSectionHeight + bottomSectionHeight)
-  }, [children])
+  }, [bottomSection.className, middleSection.className, topSection.className])
 
   return (
-    <div className={twMerge("relative w-full h-full", className)} >
+    <div className={twMerge("relative", className)} >
       <div className="absolute inset-0 w-full h-full flex flex-col">
         <BackgroundSection
           imagePath={topSection.imageUrl}

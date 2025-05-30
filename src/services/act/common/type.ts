@@ -2,6 +2,15 @@ import { LangKey } from "@/services/type"
 
 import type { DisplayStyle } from "./constant"
 
+// list 分页
+export interface LoadMoreRes<T> {
+  limitCount?: number
+  hasMore: boolean
+  scroll?: string
+  list: T[]
+}
+
+// 获取活动配置
 export interface ActConfigParams {
   activitiesId: number
 }
@@ -20,6 +29,7 @@ export interface ActConfigRes {
   isWhite: boolean
 }
 
+// 获取翻译
 export interface TranslationsParams {
   translateId: number
 }
@@ -28,6 +38,7 @@ export type TranslationsRes = {
   [key in LangKey]: Record<string, string>
 }
 
+// 获取奖励配置
 export interface RewardConfigV3Res {
   userSendGiftRank?: RewardConfigV3ResUserConfig
   userReceiveGiftRank?: RewardConfigV3ResUserConfig
@@ -49,7 +60,7 @@ export interface ActivitiesReward {
   name: string
   sort: number
   displayStyle: DisplayStyle
-  nameI18n: LangKey
+  nameI18n: Record<LangKey, string>
   activityGiftConfigGroupGiftList: RewardGift[]
   displayStyleExtJson?: string
 }
@@ -60,7 +71,7 @@ export interface RewardGift {
   expireType: number
   cover: string
   sort: number
-  nameI18n: LangKey
+  nameI18n: Record<LangKey, string>
 }
 
 export interface ExtConfig {
@@ -130,6 +141,8 @@ export interface ThemeConfigTask {
   dailyTaskItemBg: string
   stepsTaskItemProgressBg: string
 }
+
+// 获取服务器时间
 
 export interface ServerTimeRes {
   weekstart: string

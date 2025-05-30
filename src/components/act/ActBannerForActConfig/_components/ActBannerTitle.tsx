@@ -30,7 +30,7 @@ const ActBannerTitle = ({ titleMapImage }: Props) => {
     return null
   }
 
-  return <Image src={titleImage} fill alt="title" className='object-contain' />
+  return <Image src={titleImage} fill sizes='100%' alt="title" className='object-contain' />
 }
 
 export default ActBannerTitle

@@ -19,7 +19,7 @@ const ActBannerForActConfig = ({ actBannerConfig, bannerClassName, bannerTitleCl
   return (
     <section className="w-full">
       <div className={twMerge('relative w-[750px] h-[950px]', bannerClassName)}>
-        <Image src={banner.cover} alt="title" fill priority className="object-contain" />
+        <Image src={banner.cover} alt="title" fill sizes='100%' priority className="object-contain" />
       </div>
       <div className={twMerge('absolute top-0 left-0 w-[750px] h-[250px]', bannerTitleClassName)}>
         <ActBannerTitle titleMapImage={banner.title} />

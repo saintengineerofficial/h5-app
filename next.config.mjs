@@ -1,9 +1,17 @@
 import createNextIntlPlugin from "next-intl/plugin"
 
-const withNextIntl = createNextIntlPlugin()
+const withNextIntl = createNextIntlPlugin({
+  defaultTranslationValues: {
+    fallback: key => key,
+  },
+})
 
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
+  experimental: {
+    runtime: "edge",
+  },
   images: {
     remotePatterns: [
       {

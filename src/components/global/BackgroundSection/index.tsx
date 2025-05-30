@@ -44,6 +44,7 @@ const BackgroundSection = ({
         src={imagePath}
         alt="background"
         fill
+        sizes='100%'
         className="object-contain"
       />
 

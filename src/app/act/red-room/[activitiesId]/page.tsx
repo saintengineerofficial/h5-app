@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 
 import { getTranslations } from 'next-intl/server'
 
+import ActProgrssBar from '@/components/act/ActProgrssBar'
 import ActTopTitle from '@/components/act/ActTopTitle'
 import BackgroundSectionAsync from '@/components/client/BackgroundSectionAsync'
 import Space from '@/components/global/Space'
@@ -9,14 +10,22 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 import ActDecorateContainerAsync from './_components/ActClient/ActDecorateContainerAsync'
 import ActDecorateContainer from './_components/ActDecorateContainer'
-import ActProgrssBar from './_components/ActProgrssBar'
 import ActRewardGroupRender from './_components/ActRewardGroupRender'
+
+import type { Metadata } from 'next'
 
 type Props = {
   params: Promise<{ activitiesId: string }>
 }
 
 export const revalidate = 60
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+  return {
+    title: t('agencyRank'),
+  }
+}
 
 const Page = async ({ params }: Props) => {
   const { activitiesId } = await params

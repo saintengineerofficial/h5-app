@@ -12,6 +12,7 @@ import { formatTimestamp } from '@/lib/utils/time-utils';
 
 interface Props {
   params: Promise<{ activitiesId: string }>
+  children: React.ReactNode
 }
 
 const configSection = {
@@ -27,7 +28,7 @@ const countdownConfig = {
   textClassName: "text-[28px] text-[#FFFFFF]",
 }
 
-const ActLayout = async ({ children, params }: PropsWithChildren<Props>) => {
+const ActLayout = async ({ children, params }: Props) => {
   const { activitiesId } = await params
 
   try {
