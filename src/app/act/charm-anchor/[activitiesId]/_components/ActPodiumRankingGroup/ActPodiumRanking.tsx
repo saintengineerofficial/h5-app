@@ -8,7 +8,7 @@ import InternalImage from '@/components/global/InternalImage';
 
 import { numberToScore } from '@/lib/utils/format-util';
 
-import type { RankingItem } from '../../_lib/api/type';
+import type { RankingItem } from '../../_lib/server/type';
 
 type Props = {
   rankingItem: RankingItem

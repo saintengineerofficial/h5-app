@@ -7,7 +7,7 @@ import SkeletonGrid from '@/components/global/SkeletonGrid'
 
 import ActPodiumRankingGroup from '../../_components/ActPodiumRankingGroup'
 import ActRankingGroup from '../../_components/ActRankingGroup'
-import { ActApi } from '../../_lib/api'
+import { ActApi } from '../../_lib/server'
 
 
 type Props = {
