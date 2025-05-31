@@ -2,7 +2,7 @@ import React from 'react'
 
 import ActRanking from './ActRanking'
 
-import type { RankingItem } from '../../_lib/server/type'
+import type { RankingItem } from '../../_lib/api/type'
 
 type Props = {
   rankingList: RankingItem[]

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development next dev --turbopack",
     "build:test": "npm run compress-images && cross-env NODE_ENV=test next build",
-    "build": "npm run compress-images && next build",
+    "build": "npm run compress-images && cross-env NODE_ENV=production next build",
     "start": "next start",
     "lint": "next lint",
     "translations": "node src/scripts/downloadTranslations.mjs",

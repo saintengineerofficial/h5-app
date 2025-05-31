@@ -8,7 +8,7 @@ import InternalImage from '@/components/global/InternalImage';
 
 import { numberToScore } from '@/lib/utils/format-util';
 
-import type { RankingItem } from '../../_lib/server/type';
+import type { RankingItem } from '../../_lib/api/type';
 
 type Props = {
   rankingItem: RankingItem
@@ -28,16 +28,16 @@ const ActPodiumRanking = ({ rankingItem, config }: Props) => {
       <InternalAvatar
         src={rankingItem.avatarurl}
         uid={rankingItem.uid}
-        className={twMerge('absolute z-[-1] size-[176px] top-[100px] translate-x-[-50%] left-1/2', config.avatarClassName)}
+        className={twMerge('absolute size-[176px] translate-x-[-50%] left-1/2', config.avatarClassName)}
       />
       <BackgroundSectionAsync imagePath={config.backgroundImagePath}
-        className={twMerge('size-[176px] top-[100px] translate-x-[-50%] left-1/2', config.backgroundClassName)}
+        className={twMerge('pointer-events-none size-[176px] translate-x-[-50%] left-1/2', config.backgroundClassName)}
       >
         <div className={twMerge(
           'absolute bottom-[60px] translate-x-[-50%] left-1/2 flex flex-col items-center justify-center w-full text-[#FFf] text-[24px] font-400',
           config.infoClassName
         )}>
-          <p className='truncate'>{rankingItem.nickname}</p>
+          <p className='truncate max-w-[180px]'>{rankingItem.nickname}</p>
           <p className='font-900 whitespace-nowrap'>ID: {rankingItem.uid}</p>
         </div>
         <div className={twMerge(

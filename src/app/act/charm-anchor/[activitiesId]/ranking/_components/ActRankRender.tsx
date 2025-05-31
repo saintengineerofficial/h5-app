@@ -7,7 +7,7 @@ import SkeletonGrid from '@/components/global/SkeletonGrid'
 
 import ActPodiumRankingGroup from '../../_components/ActPodiumRankingGroup'
 import ActRankingGroup from '../../_components/ActRankingGroup'
-import { ActApi } from '../../_lib/server'
+import { ActApi } from '../../_lib/api'
 
 
 type Props = {
@@ -21,13 +21,13 @@ const ActRankRender = ({ activitiesId }: Props) => {
     queryFn: () => ActApi.getRanking(),
   })
 
-  if (!data || isLoading) {
+  if (isLoading || !data) {
     return (
       <SkeletonGrid
         columns={1}
         rows={10}
-        containerClassName='px-[60px] pt-[150px]'
-        cardClassName='w-[650px] h-[200px]' />
+        containerClassName='px-[60px] w-full pt-[150px]'
+        cardClassName='w-[600px] h-[200px]' />
     )
   }
 

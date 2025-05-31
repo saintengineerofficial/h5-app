@@ -15,6 +15,13 @@ export const CommonActApi = {
       { needUserInfo: false }
     )
   },
+  getActRewardConfigProxy(params: ActConfigParams) {
+    return request.get<RewardConfigV3Res>(
+      `/api/act-reward-config?activitiesId=${params.activitiesId}`,
+      { cacheTime: 1000 * 60 * 60 * 24 },
+      { needUserInfo: false }
+    )
+  },
   getTranslations(params: TranslationsParams) {
     return request.get<TranslationsRes>(
       getConfigBaseApiUrl(`/lang_conf/pre/h5_${params.translateId}.json?__t__=${Date.now()}`),
