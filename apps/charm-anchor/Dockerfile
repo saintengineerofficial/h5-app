@@ -34,8 +34,9 @@ WORKDIR /app
 ENV NODE_ENV production
 ENV PORT 3300
 
-# 复制 standalone 输出（包含 server.js）和 public 目录
+# 复制 standalone 输出（包含 server.js）和 public、static 目录
 COPY --from=builder /app/apps/charm-anchor/.next/standalone ./
+COPY --from=builder /app/apps/charm-anchor/.next/static ./static
 COPY --from=builder /app/apps/charm-anchor/public ./public
 
 EXPOSE ${PORT}
