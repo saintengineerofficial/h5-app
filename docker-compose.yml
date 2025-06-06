@@ -20,6 +20,8 @@ services:
       # - app-b
       # - app-c
     restart: unless-stopped
+    networks:
+      - boli-network
 
   # Charm Anchor 应用服务
   charm-anchor:
@@ -32,6 +34,8 @@ services:
       - PORT=3300
       - NEXT_PUBLIC_BASE_PATH=/charm-anchor
     restart: unless-stopped
+    networks:
+      - boli-network
 
   # 应用模板 (复制此模板来添加新应用)
   # app-template:
@@ -44,3 +48,7 @@ services:
   #     - PORT=3301  # 确保每个应用使用不同的端口
   #     - NEXT_PUBLIC_BASE_PATH=/app-name
   #   restart: unless-stopped
+
+networks:
+  boli-network:
+    driver: bridge
