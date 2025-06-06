@@ -7,15 +7,15 @@ WORKDIR /app
 RUN npm install -g pnpm
 
 # 复制 Monorepo 根目录下的关键文件，利用 Docker 层缓存
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
+COPY package.json pnpm-workspace.yaml turbo.json ./
 # 复制当前 Next.js 应用的 package.json
 COPY apps/charm-anchor/package.json ./apps/charm-anchor/
 # 如果有共享的 packages（在 packages/ 目录下），复制它们的 package.json
 COPY packages/hooks/package.json ./packages/hooks/
 COPY packages/request/package.json ./packages/request/
 
-# 安装所有依赖
-RUN pnpm install --frozen-lockfile
+# 安装所有依赖（不使用 --frozen-lockfile）
+RUN pnpm install
 
 # 复制整个 Monorepo 源代码
 COPY . .
