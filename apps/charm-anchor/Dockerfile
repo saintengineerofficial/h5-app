@@ -44,14 +44,16 @@ ENV PORT=3300
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# 复制 standalone 输出的正确结构
-COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone/apps/${APP_NAME}/server.js ./server.js
-COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone/node_modules ./node_modules
-COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/static ./static
+# 复制整个 standalone 文件夹，保持其结构
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone ./
+# 复制 static 文件夹到 .next/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/static ./.next/static
+# 复制 public 文件夹
 COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/public ./public
 
 USER nextjs
 
 EXPOSE ${PORT}
 
-CMD ["node", "server.js"]
+# 运行 server.js，路径调整为 standalone 内的正确位置
+CMD ["node", "apps/charm-anchor/server.js"]
