@@ -40,6 +40,7 @@ ENV PORT 3300
 
 # 复制 standalone 输出（server.js 和 static 目录）到根目录
 COPY --from=builder /app/apps/${APP_NAME}/.next/standalone/apps/${APP_NAME}/server.js ./server.js
+COPY --from=builder /app/apps/${APP_NAME}/.next/standalone/node_modules ./node_modules
 COPY --from=builder /app/apps/${APP_NAME}/.next/static ./static
 COPY --from=builder /app/apps/${APP_NAME}/public ./public
 
