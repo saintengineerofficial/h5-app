@@ -45,23 +45,14 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # 复制 standalone 输出的正确结构
-# 首先复制根级别的 node_modules 和依赖
-COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone ./
 
-# 复制静态文件
-COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/static ./apps/${APP_NAME}/.next/static
-
-# 复制 public 文件
-COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/public ./apps/${APP_NAME}/public
-
-COPY --from=builder /app/apps/${APP_NAME}/.next/standalone/apps/${APP_NAME}/server.js ./apps/${APP_NAME}/server.js
-COPY --from=builder /app/apps/${APP_NAME}/.next/standalone/node_modules ./node_modules
-COPY --from=builder /app/apps/${APP_NAME}/.next/static ./static
-COPY --from=builder /app/apps/${APP_NAME}/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone/apps/${APP_NAME}/server.js ./apps/${APP_NAME}/server.js
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/static ./static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/public ./public
 
 USER nextjs
 
 EXPOSE ${PORT}
 
-# 使用正确的路径启动服务器
-CMD ["node", "apps/${APP_NAME}/server.js"]
+CMD sh -c "node apps/${APP_NAME}/server.js"
