@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # Nginx 反向代理服务
+  nginx:
+    image: nginx:latest
+    container_name: nextjs_proxy_nginx
+    ports:
+      - "80:80"  # 外部 80 端口映射到容器 80 端口
+      - "443:443" # 外部 443 端口映射到容器 443 端口
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro         # Nginx 主配置
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro                 # 站点配置文件 (例如 main-domain.conf)
+      # 挂载您的证书文件 (重要！请替换为您的实际路径和文件名)
+      - ./data/certs/boli.live_bundle.crt:/etc/nginx/ssl/boli.live_bundle.crt:ro
+      - ./data/certs/boli.live.key:/etc/nginx/ssl/boli.live.key:ro
+    depends_on:
+      - charm-anchor
+      # 当添加新应用时，在此处添加依赖
+      # - app-b
+      # - app-c
+    restart: unless-stopped
+
+  # Charm Anchor 应用服务
+  charm-anchor:
+    build:
+      context: .
+      dockerfile: apps/charm-anchor/Dockerfile
+    container_name: nextjs_charm_anchor
+    environment:
+      - NODE_ENV=production
+      - PORT=3300
+      - NEXT_PUBLIC_BASE_PATH=/charm-anchor
+    restart: unless-stopped
+
+  # 应用模板 (复制此模板来添加新应用)
+  # app-template:
+  #   build:
+  #     context: .
+  #     dockerfile: apps/app-name/Dockerfile
+  #   container_name: nextjs_app_name
+  #   environment:
+  #     - NODE_ENV=production
+  #     - PORT=3301  # 确保每个应用使用不同的端口
+  #     - NEXT_PUBLIC_BASE_PATH=/app-name
+  #   restart: unless-stopped

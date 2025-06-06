@@ -1,48 +1,35 @@
-# 构建阶段
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
-# 设置工作目录
 WORKDIR /app
 
-# 安装 pnpm
-RUN npm install -g pnpm@8.15.5
-
-# 复制 package.json 和 pnpm-lock.yaml
-COPY package.json pnpm-lock.yaml ./
-COPY pnpm-workspace.yaml ./
+# 复制 Monorepo 根目录下的关键文件，利用 Docker 层缓存
+COPY package.json package-lock.json turbo.json ./
+# 复制当前 Next.js 应用的 package.json
 COPY apps/charm-anchor/package.json ./apps/charm-anchor/
-COPY packages/ ./packages/
+# 如果有共享的 packages（在 packages/ 目录下），复制它们的 package.json
+COPY packages/hooks/package.json ./packages/hooks/
+COPY packages/request/package.json ./packages/request/
 
-# 安装依赖
-RUN pnpm install
+# 安装所有依赖
+RUN npm install --frozen-lockfile
 
-# 复制源代码
+# 复制整个 Monorepo 源代码
 COPY . .
 
-# 构建应用
-RUN pnpm build --filter charm-anchor
+# 使用 Turborepo 构建当前 Next.js 应用 (利用 Turborepo 的缓存和优化)
+RUN turbo build --filter=charm-anchor 
 
-# 生产阶段
-FROM node:18-alpine AS runner
+# 阶段 2: 创建生产环境镜像
+FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# 安装 pnpm
-RUN npm install -g pnpm@8.15.5
+ENV NODE_ENV production
+ENV PORT 3300 # Next.js 生产服务器默认监听端口
 
-# 复制必要文件
-COPY --from=builder /app/apps/charm-anchor/next.config.js ./
+# 复制 Next.js standalone 输出和 public 目录
+COPY --from=builder /app/apps/charm-anchor/.next/standalone ./
 COPY --from=builder /app/apps/charm-anchor/public ./public
-COPY --from=builder /app/apps/charm-anchor/.next ./.next
-COPY --from=builder /app/apps/charm-anchor/package.json ./
-COPY --from=builder /app/node_modules ./node_modules
 
-# 设置环境变量
-ENV NODE_ENV=production
-ENV PORT=3000
-
-# 暴露端口
-EXPOSE 3000
-
-# 启动应用
-CMD ["pnpm", "start"] 
+EXPOSE ${PORT}
+CMD ["node", "server.js"] # 启动 Next.js standalone 服务器

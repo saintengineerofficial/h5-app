@@ -9,9 +9,8 @@ const withNextIntl = createNextIntlPlugin({
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  experimental: {
-    runtime: "edge",
-  },
+  output: "standalone",
+  basePath: "/red-room",
   images: {
     remotePatterns: [
       {
@@ -23,12 +22,9 @@ const nextConfig = {
   terserOptions: {
     compress: {
       drop_console: true,
-      // 移除未使用的代码
-      dead_code: true,
-      // 更激进的内联和优化
-      inline: 3,
-      // 多次优化
-      passes: 3,
+      dead_code: true, // 移除未使用的代码
+      inline: 3, // 更激进的内联和优化
+      passes: 3, // 多次优化
     },
   },
   eslint: {
