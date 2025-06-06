@@ -6,6 +6,9 @@ WORKDIR /app
 # 安装 pnpm
 RUN npm install -g pnpm
 
+# 配置私有 registry
+RUN pnpm config set registry https://npm-yinguo.falla.live/
+
 # 复制 Monorepo 根目录下的关键文件，利用 Docker 层缓存
 COPY package.json pnpm-workspace.yaml turbo.json ./
 # 复制当前 Next.js 应用的 package.json
