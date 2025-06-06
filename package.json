@@ -15,8 +15,6 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
     "@repo/hooks": "workspace:*",
     "@repo/request": "workspace:*",
     "prettier": "^3.2.5",
