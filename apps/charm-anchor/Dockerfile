@@ -17,13 +17,13 @@ COPY apps/charm-anchor/package.json ./apps/charm-anchor/
 COPY packages/hooks/package.json ./packages/hooks/
 COPY packages/request/package.json ./packages/request/
 
-# 安装所有依赖（不使用 --frozen-lockfile）
+# 安装所有依赖
 RUN pnpm install
 
 # 复制整个 Monorepo 源代码
 COPY . .
 
-# 使用 Turborepo 构建当前 Next.js 应用
+# 构建 charm-anchor 应用
 RUN pnpm turbo build --filter=charm-anchor
 
 # 阶段 2: 创建生产环境镜像
@@ -34,9 +34,10 @@ WORKDIR /app
 ENV NODE_ENV production
 ENV PORT 3300
 
-# 复制 Next.js standalone 输出和 public 目录
+# 复制 standalone 输出（包含 server.js）和 public 目录
 COPY --from=builder /app/apps/charm-anchor/.next/standalone ./
 COPY --from=builder /app/apps/charm-anchor/public ./public
 
 EXPOSE ${PORT}
-CMD ["node", "server.js"]
+
+CMD ["node", "apps/charm-anchor/server.js"]
