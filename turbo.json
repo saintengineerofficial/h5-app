@@ -18,6 +18,12 @@
         "!.next/cache/**"
       ]
     },
+    "clean": {
+      "cache": false,
+      "outputs": [],
+      "inputs": [],
+      "dependsOn": ["^clean"]
+    },
     "lint": {},
     "test": {},
     "test:e2e": {}

@@ -7,6 +7,7 @@
     "build:test": "npm run compress-images && cross-env NODE_ENV=test next build",
     "build": "npm run compress-images && cross-env NODE_ENV=production next build",
     "start": "next start",
+    "clean": "rm -rf .next && rm -rf node_modules",
     "lint": "next lint",
     "translations": "node src/scripts/downloadTranslations.mjs",
     "compress-images": "node src/scripts/compress-images.mjs"
