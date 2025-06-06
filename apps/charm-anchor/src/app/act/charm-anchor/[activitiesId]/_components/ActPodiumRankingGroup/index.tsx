@@ -12,7 +12,7 @@ type Props = {
 const PodiumRankingConfigs = [
   {
     className: 'translate-y-[100px] translate-x-[-50%] left-1/2 z-[1]',
-    backgroundImagePath: '/charm-anchor/room-top-1.png',
+    backgroundImagePath: '/room-top-1.png',
     backgroundClassName: 'w-[560px] h-[500px]',
     avatarClassName: 'size-[176px] top-[100px] translate-x-[-50%] left-1/2',
     infoClassName: 'bottom-[80px] max-w-[100px]',
@@ -20,7 +20,7 @@ const PodiumRankingConfigs = [
   },
   {
     className: 'translate-y-[250px] left-0 z-[2]',
-    backgroundImagePath: '/charm-anchor/room-top-2.png',
+    backgroundImagePath: '/room-top-2.png',
     backgroundClassName: 'w-[270px] h-[410px]',
     avatarClassName: 'size-[140px] top-[70px] translate-x-[-50%] left-1/2',
     infoClassName: 'bottom-[70px]',
@@ -28,7 +28,7 @@ const PodiumRankingConfigs = [
   },
   {
     className: 'translate-y-[250px] right-0 z-[2]',
-    backgroundImagePath: '/charm-anchor/room-top-3.png',
+    backgroundImagePath: '/room-top-3.png',
     backgroundClassName: 'w-[270px] h-[410px]',
     avatarClassName: 'size-[140px] top-[70px] translate-x-[-50%] left-1/2',
     infoClassName: 'bottom-[70px]',

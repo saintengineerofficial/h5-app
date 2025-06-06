@@ -1,5 +1,5 @@
 import { getBaseApiUrl } from "@/lib/utils"
-import request from "@/services/request"
+import request from "@repo/request"
 
 import type { RankingRes } from "./type"
 

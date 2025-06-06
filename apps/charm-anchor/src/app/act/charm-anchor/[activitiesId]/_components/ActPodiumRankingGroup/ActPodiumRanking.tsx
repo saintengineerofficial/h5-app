@@ -45,7 +45,7 @@ const ActPodiumRanking = ({ rankingItem, config }: Props) => {
           config.coinClassName
         )}>
           <span>{numberToScore(rankingItem.val)}</span>
-          <InternalImage src='/charm-anchor/icon-coin.png' alt='coin' className='size-[22px]' />
+          <InternalImage src='/icon-coin.png' alt='coin' className='size-[22px]' />
         </div>
       </BackgroundSectionAsync>
     </div >

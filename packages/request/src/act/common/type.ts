@@ -1,5 +1,6 @@
-import type { LangKey } from "@/services/type"
-import type { DisplayStyle } from "./constant"
+import { LangKey } from "@/services/type"
+
+import type { DisplayStyle } from "./constant.js"
 
 // list 分页
 export interface LoadMoreRes<T> {

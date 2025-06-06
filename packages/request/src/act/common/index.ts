@@ -1,8 +1,8 @@
 import { getBaseApiUrl, getConfigBaseApiUrl } from "@/lib/utils"
+import request from "@/services/request"
 
-import type { ActConfigParams, ActConfigRes, RewardConfigV3Res, ServerTimeRes, TranslationsParams, TranslationsRes } from "./type"
+import type { ActConfigParams, ActConfigRes, RewardConfigV3Res, ServerTimeRes, TranslationsParams, TranslationsRes } from "./type.js"
 import type { CommonApiRes } from "@/services/type"
-import request from "@repo/request"
 
 export const CommonActApi = {
   getActConfig(params: ActConfigParams) {

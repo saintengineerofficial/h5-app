@@ -19,9 +19,9 @@ type Props = {
 }
 
 const titleMap: Record<number, string> = {
-  0: '/charm-anchor/reward-title-01.png',
-  1: '/charm-anchor/reward-title-02.png',
-  2: '/charm-anchor/reward-title-03.png',
+  0: '/reward-title-01.png',
+  1: '/reward-title-02.png',
+  2: '/reward-title-03.png',
 }
 
 const ActRewardGroupRender = ({ activitiesId }: Props) => {

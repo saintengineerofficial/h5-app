@@ -17,7 +17,7 @@ const ActButtonDialog = () => {
     <ActDialog
       trigger={
         <ActButton
-          imagePath='/charm-anchor/btn-rule.png'
+          imagePath='/btn-rule.png'
           buttonText={t('rule')}
           wrapperClassName='absolute top-[522px] right-0'
           className='w-[122px] h-[80px]'

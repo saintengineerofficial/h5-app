@@ -22,14 +22,6 @@
     },
     "target": "ES2017"
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "typings.d.ts",
-    "src/scripts/compress-images.mjs",
-    "src/components/global/VConsole/vconsole-change-account.js"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "typings.d.ts"],
   "exclude": ["node_modules"]
 }
