@@ -11,9 +11,6 @@ const withNextIntl = createNextIntlPlugin({
 const nextConfig = {
   output: "standalone",
   basePath: "/charm-anchor",
-  experimental: {
-    runtime: "edge",
-  },
   images: {
     remotePatterns: [
       {
