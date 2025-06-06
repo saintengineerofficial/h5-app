@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development next dev --turbopack",
+    "dev": "cross-env NODE_ENV=development next dev --turbopack -p 3300",
     "build:test": "npm run compress-images && cross-env NODE_ENV=test next build",
     "build": "npm run compress-images && cross-env NODE_ENV=production next build",
     "start": "next start",
