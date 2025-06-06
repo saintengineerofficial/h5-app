@@ -31,5 +31,5 @@ ENV PORT 3300 # Next.js 生产服务器默认监听端口
 COPY --from=builder /app/apps/charm-anchor/.next/standalone ./
 COPY --from=builder /app/apps/charm-anchor/public ./public
 
-EXPOSE ${PORT}
+EXPOSE 3300
 CMD ["node", "server.js"] # 启动 Next.js standalone 服务器
