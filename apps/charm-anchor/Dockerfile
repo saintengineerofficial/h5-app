@@ -47,7 +47,7 @@ RUN adduser --system --uid 1001 nextjs
 # 复制整个 standalone 文件夹，保持其结构
 COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone ./
 # 复制 static 文件夹到 .next/static
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./apps/${APP_NAME}/.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/static ./.next/static
 # 复制 public 文件夹
 COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/public ./public
 
