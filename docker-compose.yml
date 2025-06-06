@@ -32,7 +32,6 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3300
-      - NEXT_PUBLIC_BASE_PATH=/charm-anchor
     restart: unless-stopped
     networks:
       - boli-network
