@@ -54,9 +54,14 @@ COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/static ./a
 # 复制 public 文件
 COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/public ./apps/${APP_NAME}/public
 
+COPY --from=builder /app/apps/${APP_NAME}/.next/standalone/apps/${APP_NAME}/server.js ./apps/${APP_NAME}/server.js
+COPY --from=builder /app/apps/${APP_NAME}/.next/standalone/node_modules ./node_modules
+COPY --from=builder /app/apps/${APP_NAME}/.next/static ./static
+COPY --from=builder /app/apps/${APP_NAME}/public ./public
+
 USER nextjs
 
 EXPOSE ${PORT}
 
 # 使用正确的路径启动服务器
-CMD ["sh", "-c", "node apps/${APP_NAME}/server.js"]
+CMD ["node", "apps/${APP_NAME}/server.js"]
