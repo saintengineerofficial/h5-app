@@ -55,4 +55,4 @@ USER nextjs
 
 EXPOSE ${PORT}
 
-CMD sh -c "node apps/${APP_NAME}/server.js"
+CMD ["node", "apps/charm-anchor/server.js"]
