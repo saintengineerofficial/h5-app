@@ -45,8 +45,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # 复制 standalone 输出的正确结构
-
-COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone/apps/${APP_NAME}/server.js ./apps/${APP_NAME}/server.js
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone/apps/${APP_NAME}/server.js ./server.js
 COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone/node_modules ./node_modules
 COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/static ./static
 COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/public ./public
@@ -55,4 +54,4 @@ USER nextjs
 
 EXPOSE ${PORT}
 
-CMD ["node", "apps/charm-anchor/server.js"]
+CMD ["node", "server.js"]
