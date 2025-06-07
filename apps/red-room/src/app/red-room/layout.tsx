@@ -11,7 +11,6 @@ import { str2Json } from '@/lib/utils/format-util'
 import { formatTimestamp } from '@/lib/utils/time-utils';
 
 interface Props {
-  params: Promise<{ activitiesId: string }>
   children: React.ReactNode
 }
 
@@ -28,29 +27,31 @@ const countdownConfig = {
   textClassName: "text-[28px] text-[#FFFFFF]",
 }
 
-const ActLayout = async ({ children, params }: Props) => {
-  const { activitiesId } = await params
+const ActLayout = async ({ children }: Props) => {
+  const activitiesId = process.env.NEXT_PUBLIC_ACTIVITIES_ID!
 
   try {
     const actBaseConfig = await getActBaseConfig(+activitiesId)
 
     const extConfig = str2Json(actBaseConfig.res.extConfig)
     return (
-      <main className={twMerge('relative w-full h-full', configSection.bgColorClassName)}>
-        <ActBannerForActConfig
-          actBannerConfig={extConfig}
-          bannerClassName={configSection.bannerClassName}
-          bannerTitleClassName={configSection.bannerTitleClassName}
-        />
-        <ActCountdown
-          targetDate={formatTimestamp(1748698442 * 1000)}
-          timeImagePath="/red-room/time-bg.png"
-          {...countdownConfig}
-        />
-        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
-          {children}
-        </Suspense>
-      </main>
+      <div className='w-screen min-h-screen h-full mx-auto overflow-x-hidden'>
+        <main className={twMerge('relative w-full h-full', configSection.bgColorClassName)}>
+          <ActBannerForActConfig
+            actBannerConfig={extConfig}
+            bannerClassName={configSection.bannerClassName}
+            bannerTitleClassName={configSection.bannerTitleClassName}
+          />
+          <ActCountdown
+            targetDate={formatTimestamp(1748698442 * 1000)}
+            timeImagePath="/red-room/time-bg.png"
+            {...countdownConfig}
+          />
+          <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+            {children}
+          </Suspense>
+        </main>
+      </div>
     )
   } catch (error) {
     console.error('Error loading activity data:', error)

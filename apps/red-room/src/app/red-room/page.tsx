@@ -14,9 +14,6 @@ import ActRewardGroupRender from './_components/ActRewardGroupRender'
 
 import type { Metadata } from 'next'
 
-type Props = {
-  params: Promise<{ activitiesId: string }>
-}
 
 export const revalidate = 60
 
@@ -27,8 +24,8 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-const Page = async ({ params }: Props) => {
-  const { activitiesId } = await params
+const Page = async () => {
+  const activitiesId = process.env.NEXT_PUBLIC_ACTIVITIES_ID!
   const t = await getTranslations();
 
   try {

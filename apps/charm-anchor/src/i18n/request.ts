@@ -7,20 +7,20 @@ import { CommonActApi } from "@/services/act/common"
 
 import type { LangKey } from "@/services/type"
 
-export async function getTranslationId() {
-  try {
-    const headersList = headers()
-    const url = (await headersList).get("x-url") || ""
-    const searchParams = new URL(url).searchParams
-    return searchParams.get("translateId")
-  } catch {
-    throw new Error("Failed to get translation id")
-  }
-}
+// export async function getTranslationId() {
+//   try {
+//     const headersList = headers()
+//     const url = (await headersList).get("x-url") || ""
+//     const searchParams = new URL(url).searchParams
+//     return searchParams.get("translateId")
+//   } catch {
+//     throw new Error("Failed to get translation id")
+//   }
+// }
 
 export default getRequestConfig(async () => {
   const locale = (await getLocale()) as LangKey
-  const translateId = await getTranslationId()
+  const translateId = process.env.NEXT_PUBLIC_TRANSLATE_ID
 
   let messages = {}
   try {

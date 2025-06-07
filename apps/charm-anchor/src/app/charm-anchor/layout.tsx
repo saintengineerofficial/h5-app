@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren, Suspense } from 'react'
+import React from 'react'
 
 import { twMerge } from 'tailwind-merge';
 
@@ -15,7 +15,6 @@ import { str2Json } from '@/lib/utils/format-util'
 import { formatTimestamp } from '@/lib/utils/time-utils';
 
 interface Props {
-  params: Promise<{ activitiesId: string }>
   children: React.ReactNode
 }
 
@@ -39,8 +38,8 @@ const buttonTabConfig = {
   activeTextClassName: "text-[#FFEC1C]",
 }
 
-const ActLayout = async ({ children, params }: Props) => {
-  const { activitiesId } = await params
+const ActLayout = async ({ children }: Props) => {
+  const activitiesId = process.env.NEXT_PUBLIC_ACTIVITIES_ID!
 
   try {
     const actBaseConfig = await getActBaseConfig(+activitiesId)
@@ -49,35 +48,33 @@ const ActLayout = async ({ children, params }: Props) => {
 
     const extConfig = str2Json(actBaseConfig.res.extConfig)
 
-    const rankingLink = `/act/${activitiesId}/ranking?translateId=544`
-    const rewardLink = `/act/${activitiesId}/reward?translateId=544`
-
     const buttons = [
-      { text: "榜单", link: rankingLink },
-      { text: "奖励", link: rewardLink },
+      { text: "榜单", link: '/charm-anchor/ranking' },
+      { text: "奖励", link: '/charm-anchor/reward' },
     ]
 
     return (
-      // 背景色
-      <main className={twMerge('relative w-full h-full bg-[#2d060f]')}>
-        <ActBannerForActConfig
-          actBannerConfig={extConfig}
-          bannerClassName={bannerSection.bannerClassName}
-          bannerTitleClassName={bannerSection.bannerTitleClassName}
-        />
-        <Rule />
-        <ActCountdown
-          targetDate={formatTimestamp(actEndTime * 1000)}
-          timeImagePath="/time-bg.png"
-          {...countdownConfig}
-        />
-        <Space h='h-[20px]' />
-        <ActButtonTab
-          buttons={buttons}
-          {...buttonTabConfig}
-        />
-        {children}
-      </main>
+      <div className='w-screen min-h-screen h-full mx-auto overflow-x-hidden'>
+        <main className={twMerge('relative w-full h-full bg-[#2d060f]')}>
+          <ActBannerForActConfig
+            actBannerConfig={extConfig}
+            bannerClassName={bannerSection.bannerClassName}
+            bannerTitleClassName={bannerSection.bannerTitleClassName}
+          />
+          <Rule />
+          <ActCountdown
+            targetDate={formatTimestamp(actEndTime * 1000)}
+            timeImagePath="/time-bg.png"
+            {...countdownConfig}
+          />
+          <Space h='h-[20px]' />
+          <ActButtonTab
+            buttons={buttons}
+            {...buttonTabConfig}
+          />
+          {children}
+        </main>
+      </div>
     )
   } catch (error) {
     console.error('Error loading activity data:', error)
