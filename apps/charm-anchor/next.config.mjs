@@ -18,6 +18,11 @@ const nextConfig = {
       },
     ],
   },
+  assetPrefix: process.env.NODE_ENV === "production" ? "" : undefined,
+  basePath: "",
+  poweredByHeader: false,
+  generateEtags: true,
+  compress: true,
   terserOptions: {
     compress: {
       drop_console: true,

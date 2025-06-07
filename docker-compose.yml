@@ -1,24 +1,19 @@
-version: '3.8'
-
 services:
   # Nginx 反向代理服务
   nginx:
     image: nginx:latest
     container_name: nextjs_proxy_nginx
     ports:
-      - "80:80"  # 外部 80 端口映射到容器 80 端口
-      - "443:443" # 外部 443 端口映射到容器 443 端口
+      - "${NGINX_HOST_HTTP_PORT}:80"
+      - "${NGINX_HOST_HTTPS_PORT}:443" # 保持 HTTPS 端口映射
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro         # Nginx 主配置
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro                 # 站点配置文件 (例如 main-domain.conf)
-      # 挂载您的证书文件 (重要！请替换为您的实际路径和文件名)
-      - ./data/certs/boli.live_bundle.crt:/etc/nginx/ssl/boli.live_bundle.crt:ro
-      - ./data/certs/boli.live.key:/etc/nginx/ssl/boli.live.key:ro
+      - ./nginx-local/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx-local/conf.d:/etc/nginx/conf.d:ro
+      # 证书路径保持不变，由环境变量决定其值
+      # - ${NGINX_CERT_PATH}/boli.live_bundle.crt:/etc/nginx/ssl/boli.live_bundle.crt:ro
+      # - ${NGINX_CERT_PATH}/boli.live.key:/etc/nginx/ssl/boli.live.key:ro
     depends_on:
       - charm-anchor
-      # 当添加新应用时，在此处添加依赖
-      # - app-b
-      # - app-c
     restart: unless-stopped
     networks:
       - boli-network
@@ -30,8 +25,10 @@ services:
       dockerfile: apps/charm-anchor/Dockerfile
     container_name: nextjs_charm_anchor
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=production  # 保持 production 以测试生产环境构建
       - PORT=3300
+    env_file:
+      - ./apps/charm-anchor/.env.development  # 使用开发环境配置
     restart: unless-stopped
     networks:
       - boli-network
@@ -51,4 +48,3 @@ services:
 networks:
   boli-network:
     driver: bridge
-    name: boli_network

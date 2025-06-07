@@ -18,7 +18,7 @@ const ClientActPageFallback = ({ activitiesId }: { activitiesId: number }) => {
         ])
 
         const extConfig = str2Json(actConfig.res.extConfig)
-        setData(extConfig)
+        setData(extConfig.templateConfig?.dataConfig || {})
       } catch (err) {
         setError(err as Error)
       }

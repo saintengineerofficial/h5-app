@@ -28,7 +28,7 @@ RUN pnpm install
 # 复制整个 Monorepo 源代码
 COPY . .
 
-# 构建 charm-anchor 应用
+# 构建应用
 RUN pnpm turbo build --filter=${APP_NAME}
 
 # 阶段 2: 创建生产环境镜像
@@ -47,9 +47,9 @@ RUN adduser --system --uid 1001 nextjs
 # 复制整个 standalone 文件夹，保持其结构
 COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone ./
 # 复制 static 文件夹到 .next/static
-COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/static ./apps/${APP_NAME}/.next/static
 # 复制 public 文件夹
-COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/public ./apps/${APP_NAME}/public
 
 USER nextjs
 

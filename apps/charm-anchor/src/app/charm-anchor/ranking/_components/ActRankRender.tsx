@@ -9,7 +9,6 @@ import ActPodiumRankingGroup from '../../_components/ActPodiumRankingGroup'
 import ActRankingGroup from '../../_components/ActRankingGroup'
 import { ActApi } from '../../_lib/api'
 
-
 type Props = {
   activitiesId: number
 }

@@ -9,6 +9,7 @@ import ActDecorateContainerAsync from '../_components/ActClient/ActDecorateConta
 import ActRankRender from './_components/ActRankRender'
 
 import type { Metadata } from 'next'
+import { ACTIVITIES_ID } from '@/constants/app'
 
 export const revalidate = 60
 
@@ -20,19 +21,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const Page = async () => {
-  const activitiesId = process.env.NEXT_PUBLIC_ACTIVITIES_ID!
-  try {
-    return (
-      <div className="w-full">
-        <ActDecorateContainerAsync containerType="Ranking" isOnlyContent>
-          <ActRankRender activitiesId={+activitiesId} />
-          <Space h='h-[100px]' />
-        </ActDecorateContainerAsync>
-      </div>
-    )
-  } catch {
-    return null
-  }
+  return (
+    <div className="w-full">
+      <ActDecorateContainerAsync containerType="Ranking" isOnlyContent>
+        <ActRankRender activitiesId={ACTIVITIES_ID} />
+        <Space h='h-[100px]' />
+      </ActDecorateContainerAsync>
+    </div>
+  )
 }
 
 export default Page
