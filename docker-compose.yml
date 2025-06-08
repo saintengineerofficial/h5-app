@@ -1,19 +1,22 @@
+version: '3.8'
+
 services:
   # Nginx 反向代理服务
   nginx:
-    image: nginx:latest
-    container_name: nextjs_proxy_nginx
+    image: nginx:alpine
+    container_name: nginx-${ENV}
     ports:
+      # 将容器的 80 端口映射到主机的 8080 端口
+      # 访问方式: http://localhost:8080
       - "${NGINX_HOST_HTTP_PORT}:80"
-      - "${NGINX_HOST_HTTPS_PORT}:443" # 保持 HTTPS 端口映射
+      - "${NGINX_HOST_HTTPS_PORT}:443"
     volumes:
-      - ./nginx-local/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx-local/conf.d:/etc/nginx/conf.d:ro
-      # 证书路径保持不变，由环境变量决定其值
-      # - ${NGINX_CERT_PATH}/boli.live_bundle.crt:/etc/nginx/ssl/boli.live_bundle.crt:ro
-      # - ${NGINX_CERT_PATH}/boli.live.key:/etc/nginx/ssl/boli.live.key:ro
+      # 挂载我们为本地环境准备的 nginx 配置
+      - ${NGINX_CONF_PATH}:/etc/nginx/conf.d/default.conf:ro
+      - ${NGINX_CERT_PATH}:/etc/nginx/certs:ro
     depends_on:
       - charm-anchor
+      # - red-room
     restart: unless-stopped
     networks:
       - boli-network
@@ -21,30 +24,38 @@ services:
   # Charm Anchor 应用服务
   charm-anchor:
     build:
-      context: .
-      dockerfile: apps/charm-anchor/Dockerfile
-    container_name: nextjs_charm_anchor
-    environment:
-      - NODE_ENV=production  # 保持 production 以测试生产环境构建
-      - PORT=3300
-    env_file:
-      - ./apps/charm-anchor/.env.development  # 使用开发环境配置
+      context: . # 构建上下文是 monorepo 根目录
+      dockerfile: apps/charm-anchor/Dockerfile # 指定 Dockerfile 位置
+    image: my-app/charm-anchor:${TAG}
+    container_name: charm-anchor-${ENV}
     restart: unless-stopped
+    # 端口由 Dockerfile 中的 ENV 和 EXPOSE 定义 (3000)
+    # 无需在这里暴露端口到主机，Nginx 通过内部网络访问它
+    env_file:
+      - ./apps/charm-anchor/.env.${ENV}
     networks:
       - boli-network
 
-  # 应用模板 (复制此模板来添加新应用)
-  # app-template:
+
+  # ===============================================================
+  # 为未来的应用预留位置
+  # 当你准备好部署 red-room 应用时，取消下面的注释
+  # 别忘了在上面的 nginx `depends_on` 中也取消注释
+  # ===============================================================
+  # red-room:
   #   build:
   #     context: .
-  #     dockerfile: apps/app-name/Dockerfile
-  #   container_name: nextjs_app_name
-  #   environment:
-  #     - NODE_ENV=production
-  #     - PORT=3301  # 确保每个应用使用不同的端口
-  #     - NEXT_PUBLIC_BASE_PATH=/app-name
+  #     dockerfile: apps/red-room/Dockerfile
+  #   image: my-app/red-room:${TAG}
+  #   container_name: red-room-${ENV}
   #   restart: unless-stopped
+  #   env_file:
+  #     - ${ENV_FILE_RED_ROOM}
+  #   networks:
+  #     - boli-network
 
+# 定义一个网络，让所有服务可以互相通信
 networks:
   boli-network:
     driver: bridge
+    name: boli-network

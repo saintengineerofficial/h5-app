@@ -18,22 +18,11 @@ const nextConfig = {
       },
     ],
   },
-  assetPrefix: process.env.NODE_ENV === "production" ? "" : undefined,
-  basePath: "",
+  basePath: "/charm-anchor",
+  assetPrefix: "/charm-anchor",
   poweredByHeader: false,
   generateEtags: true,
   compress: true,
-  terserOptions: {
-    compress: {
-      drop_console: true,
-      // 移除未使用的代码
-      dead_code: true,
-      // 更激进的内联和优化
-      inline: 3,
-      // 多次优化
-      passes: 3,
-    },
-  },
   eslint: {
     ignoreDuringBuilds: true,
   },

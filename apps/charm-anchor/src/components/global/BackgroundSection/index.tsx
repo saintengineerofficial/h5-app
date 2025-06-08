@@ -2,6 +2,7 @@ import type { PropsWithChildren } from 'react';
 
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
+import getConfig from 'next/config';
 
 interface BackgroundSectionProps {
   imagePath: string;
@@ -20,11 +21,12 @@ const BackgroundSection = ({
 }: PropsWithChildren<BackgroundSectionProps>) => {
 
   if (mode === 'bgRepeatY') {
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH
     return (
       <div className={twMerge(`relative w-full flex-1 overflow-hidden`, className)}>
         <div
           className="absolute inset-0 w-full h-full bg-repeat-y bg-[100%_auto]"
-          style={{ backgroundImage: `url(${imagePath})` }}
+          style={{ backgroundImage: `url(${basePath}${imagePath})` }}
         />
 
         {overlayColor && <div className={`absolute inset-0 ${overlayColor}`} />}
