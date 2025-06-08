@@ -31,8 +31,8 @@ const countdownConfig = {
 }
 
 const buttonTabConfig = {
-  imagePath: "/tab-2.png",
-  activeImagePath: "/tab-1.png",
+  imagePath: "/charm-anchor/tab-2.png",
+  activeImagePath: "/charm-anchor/tab-1.png",
   className: "w-[358px] h-[134px]",
   textClassName: "top-[10px] text-[#DD9FA0] text-[32px]",
   activeTextClassName: "text-[#FFEC1C]",
@@ -47,8 +47,8 @@ const ActLayout = async ({ children }: Props) => {
   const extConfig = str2Json(actBaseConfig.res.extConfig)
 
   const buttons = [
-    { text: "榜单", link: '/charm-anchor/ranking' },
-    { text: "奖励", link: '/charm-anchor/reward' },
+    { text: "榜单", link: '/act/ranking' },
+    { text: "奖励", link: '/act/reward' },
   ]
 
   return (
@@ -62,7 +62,7 @@ const ActLayout = async ({ children }: Props) => {
         <Rule />
         <ActCountdown
           targetDate={formatTimestamp(actEndTime * 1000)}
-          timeImagePath="/time-bg.png"
+          timeImagePath="/charm-anchor/time-bg.png"
           {...countdownConfig}
         />
         <Space h='h-[20px]' />

@@ -21,12 +21,11 @@ const BackgroundSection = ({
 }: PropsWithChildren<BackgroundSectionProps>) => {
 
   if (mode === 'bgRepeatY') {
-    const basePath = process.env.NEXT_PUBLIC_BASE_PATH
     return (
       <div className={twMerge(`relative w-full flex-1 overflow-hidden`, className)}>
         <div
           className="absolute inset-0 w-full h-full bg-repeat-y bg-[100%_auto]"
-          style={{ backgroundImage: `url(${basePath}${imagePath})` }}
+          style={{ backgroundImage: `url(${imagePath})` }}
         />
 
         {overlayColor && <div className={`absolute inset-0 ${overlayColor}`} />}

@@ -52,7 +52,7 @@ const ActRanking = ({ rankingItem, rank, config }: Props) => {
         </div>
         <div className='flex items-center gap-[6px] ml-auto'>
           <p className='text-[#FEF15B] font-500 text-[30px]'>{numberToScore(rankingItem.val)}</p>
-          <InternalImage src='/icon-coin.png' className='w-[22px] h-[22px]' />
+          <InternalImage src='/charm-anchor/icon-coin.png' className='w-[22px] h-[22px]' />
         </div>
       </div>
     </BackgroundSectionAsync>

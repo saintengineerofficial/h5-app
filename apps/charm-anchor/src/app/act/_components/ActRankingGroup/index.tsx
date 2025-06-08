@@ -9,15 +9,15 @@ type Props = {
 }
 
 const config = {
-  backgroundImagePath: '/me-bg-1.png',
-  backgroundActiveImagePath: '/me-bg-2.png',
+  backgroundImagePath: '/charm-anchor/me-bg-1.png',
+  backgroundActiveImagePath: '/charm-anchor/me-bg-2.png',
   backgroundClassName: 'w-[670px] h-[161px]',
 
-  numberImagePath: '/me-bg-3.png',
+  numberImagePath: '/charm-anchor/me-bg-3.png',
   numberBackgroundClassName: 'w-[70px] h-[70px]',
   numberClassName: 'font-600 text-[34px] text-[#560000]',
 
-  avatarDecorateImagePath: '/avatar-user.png',
+  avatarDecorateImagePath: '/charm-anchor/avatar-user.png',
   avatarDecorateBackgroundClassName: 'w-[100px] h-[100px]',
   avatarClassName: 'size-[68px] z-[-1]',
 }
