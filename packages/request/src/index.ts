@@ -1,5 +1,9 @@
 import queryString from "query-string"
-
+interface CommonApiRes<T> {
+  code: number
+  msg: string
+  res: T
+}
 type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
 type ParamsWithCache<T> = T & { cacheTime?: number }
@@ -18,8 +22,11 @@ type Config = { next: { revalidate: number } } | { cache: "no-store" } | { cache
 let appBridge: any = null
 const isWindow = typeof window !== "undefined"
 
+let globalExtraHeaders: Record<string, string> = {}
+export function setGlobalRequestHeaders(headers: Record<string, string>) {
+  globalExtraHeaders = headers
+}
 class Request {
-
   // constructor() {
   //   // 在客户端环境下动态导入
   //   if (isWindow) {
@@ -37,7 +44,7 @@ class Request {
 
     const isAppEnv = !!appBridge?.isAppEnv()
 
-    const headers = {
+    const headers: Record<string, string> = {
       "Content-Type": "application/json",
     }
 
@@ -46,9 +53,12 @@ class Request {
       "X-Authorization": 999,
       "X-AppTag": "Boli",
       "X-RequestSource": isAppEnv ? "web" : "h5",
+      "X-Fromurl": "none",
+      "X-Language": "zh",
+      "X-Frompackage": "none",
     }
 
-    Object.assign(headers, defaultHeaders)
+    Object.assign(headers, defaultHeaders, globalExtraHeaders)
 
     // if (needUserInfo && isWindow && isAppEnv) {
     //   const appHeaders = appBridge.getRequestHeaders()
@@ -87,7 +97,17 @@ class Request {
     return new Promise((resolve, reject) => {
       const requestUrl = res.url
       if (res.ok) {
-        return resolve(res.json() as Promise<T>)
+        const resJsonPromise: Promise<CommonApiRes<T>> = res.json()
+        resJsonPromise
+          .then(data => {
+            if (typeof data === "object" && data !== null && "code" in data && data.code !== 0) {
+              return reject({ message: data.msg || "接口错误", code: data.code, url: requestUrl, data })
+            }
+            return resolve(resJsonPromise as Promise<T>)
+          })
+          .catch(err => {
+            return reject({ message: err?.message || "解析响应失败", url: requestUrl })
+          })
       } else {
         res
           .clone()

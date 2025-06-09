@@ -9,6 +9,8 @@ import { Toaster } from "@/components/ui/toaster"
 import QueryProvider from "@/provider/QueryProvider"
 
 import "./globals.css"
+import { cookies } from "next/headers"
+import { setGlobalRequestHeaders } from "@repo/request"
 
 const DynamicVConsole = dynamic(() => import("../components/global/VConsole"))
 
@@ -28,6 +30,16 @@ export const metadata: Metadata = {
   title: "Boli",
   description: "Boli",
 }
+
+// const fromPackage = (await cookies()).get("x-frompackage")?.value || "none"
+// const language = (await cookies()).get("x-language")?.value || "zh"
+// const fromurl = (await cookies()).get("x-fromurl")?.value || "none"
+
+// setGlobalRequestHeaders({
+//   'x-frompackage': fromPackage,
+//   'x-language': language,
+//   'x-fromurl': fromurl
+// })
 
 export default async function RootLayout({
   children,
