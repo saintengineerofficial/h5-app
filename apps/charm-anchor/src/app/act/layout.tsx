@@ -42,15 +42,21 @@ const buttonTabConfig = {
 const ActLayout = async ({ children }: Props) => {
 
   const actBaseConfig = await getActBaseConfig(ACTIVITIES_ID)
+  console.log("🚀 ~ ActLayout ~ actBaseConfig:", actBaseConfig)
 
   const actEndTime = actBaseConfig.res.endTime
 
   const extConfig = str2Json(actBaseConfig.res.extConfig) as ExtConfig
+  console.log("🚀 ~ ActLayout ~ extConfig:", extConfig)
 
   const buttons = [
     { text: "榜单", link: '/act/ranking' },
     { text: "奖励", link: '/act/reward' },
   ]
+
+  if (!extConfig) {
+    console.error("dataConfig 为空！");
+  }
 
   return (
     <div className='w-screen min-h-screen h-full mx-auto overflow-x-hidden'>
