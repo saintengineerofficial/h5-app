@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 
-import appBridge from '@yg/app-bridge'
+// import appBridge from '@yg/app-bridge'
 import { useMemoizedFn } from 'ahooks'
 import { twMerge } from 'tailwind-merge'
 
@@ -19,7 +19,7 @@ type Props = {
 const ActDecorateAvatar = ({ avatarUrl, uid, backgroundImagePath, backgroundClassName, avatarClassName }: Props) => {
   const handleClick = useMemoizedFn(() => {
     if (uid) {
-      appBridge.gotoUser(uid);
+      // appBridge.gotoUser(uid);
       return
     }
   })

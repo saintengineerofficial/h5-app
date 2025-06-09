@@ -19,14 +19,14 @@ let appBridge: any = null
 const isWindow = typeof window !== "undefined"
 
 class Request {
-  constructor() {
-    // 在客户端环境下动态导入
-    if (isWindow) {
-      import("@yg/app-bridge").then(module => {
-        appBridge = module.default
-      })
-    }
-  }
+  // constructor() {
+  //   // 在客户端环境下动态导入
+  //   if (isWindow) {
+  //     import("@yg/app-bridge").then(module => {
+  //       appBridge = module.default
+  //     })
+  //   }
+  // }
 
   interceptorsRequest<T>({ url, method, params, extraParams }: Props<T>) {
     let queryParams = ""
@@ -34,7 +34,7 @@ class Request {
 
     const { needUserInfo = true } = extraParams || {}
 
-    const isAppEnv = !!appBridge?.isAppEnv()
+    // const isAppEnv = !!appBridge?.isAppEnv()
 
     const headers = {
       "Content-Type": "application/json",
@@ -44,15 +44,15 @@ class Request {
       "X-Uid": 999,
       "X-Authorization": 999,
       "X-AppTag": "Boli",
-      "X-RequestSource": isAppEnv ? "web" : "h5",
+      // "X-RequestSource": isAppEnv ? "web" : "h5",
     }
 
     Object.assign(headers, defaultHeaders)
 
-    if (needUserInfo && isWindow && isAppEnv) {
-      const appHeaders = appBridge.getRequestHeaders()
-      Object.assign(headers, appHeaders)
-    }
+    // if (needUserInfo && isWindow && isAppEnv) {
+    //   const appHeaders = appBridge.getRequestHeaders()
+    //   Object.assign(headers, appHeaders)
+    // }
 
     const { cacheTime, ...realParams } = params || {}
 

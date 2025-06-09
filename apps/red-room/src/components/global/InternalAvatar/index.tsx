@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 
-import appBridge from '@yg/app-bridge'
+// import appBridge from '@yg/app-bridge'
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
@@ -15,7 +15,7 @@ const InternalAvatar = ({ src, className, uid }: Props) => {
 
   const handleClick = () => {
     if (uid) {
-      appBridge.gotoUser(uid);
+      // appBridge.gotoUser(uid);
       return
     }
   }
