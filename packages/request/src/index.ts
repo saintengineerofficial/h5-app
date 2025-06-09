@@ -19,7 +19,6 @@ let appBridge: any = null
 const isWindow = typeof window !== "undefined"
 
 class Request {
-
   // constructor() {
   //   // 在客户端环境下动态导入
   //   if (isWindow) {
@@ -34,18 +33,14 @@ class Request {
     let requestPayload = ""
 
     const { needUserInfo = true } = extraParams || {}
-
     const isAppEnv = !!appBridge?.isAppEnv()
 
-    const headers = {
-      "Content-Type": "application/json",
-    }
-
+    const headers: Record<string, string> = {}
     const defaultHeaders = {
-      "X-Uid": 999,
-      "X-Authorization": 999,
+      "X-Uid": "999",
+      "X-Authorization": "999",
       "X-AppTag": "Boli",
-      "X-RequestSource": isAppEnv ? "web" : "h5",
+      "X-Requestsource": isAppEnv ? "h5" : "web",
     }
 
     Object.assign(headers, defaultHeaders)
@@ -87,7 +82,14 @@ class Request {
     return new Promise((resolve, reject) => {
       const requestUrl = res.url
       if (res.ok) {
-        return resolve(res.json() as Promise<T>)
+        const resJsonPromise = res.json()
+        // resJsonPromise.then(resJson => {
+        //   if (resJson.code !== 0) {
+        //     throw new Error()
+        //   }
+        // })
+
+        return resolve(resJsonPromise as Promise<T>)
       } else {
         res
           .clone()
@@ -112,6 +114,7 @@ class Request {
       extraParams,
     })
     const res = await fetch(req.url, req.options)
+
     return this.interceptorsResponse<T>(res)
   }
 
