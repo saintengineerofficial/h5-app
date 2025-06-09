@@ -44,7 +44,7 @@ export default async function RootLayout({
           <QueryProvider>{children}</QueryProvider>
           <Toaster />
         </NextIntlClientProvider>
-        {/* <DynamicVConsole /> */}
+        <DynamicVConsole />
       </body>
     </html>
   )
