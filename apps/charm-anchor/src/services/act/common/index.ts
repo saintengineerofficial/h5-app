@@ -6,7 +6,7 @@ import request from "@repo/request"
 
 export const CommonActApi = {
   getActConfig(params: ActConfigParams) {
-    return request.post<CommonApiRes<ActConfigRes>, ActConfigParams>(getBaseApiUrl("/api/web/activities_config/act"), params, { needUserInfo: false })
+    return request.post<CommonApiRes<ActConfigRes>, ActConfigParams>(getBaseApiUrl("/api/web/activities_config/act"), params)
   },
   getActRewardConfig(params: ActConfigParams) {
     return request.get<RewardConfigV3Res>(

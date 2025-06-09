@@ -9,10 +9,11 @@ import Space from '@/components/global/Space';
 
 import Rule from './_components/actPopup/rule';
 
-import { getActBaseConfig } from '@/lib/services/serverActData'
 import { str2Json } from '@/lib/utils/format-util'
 import { formatTimestamp } from '@/lib/utils/time-utils';
 import { ACTIVITIES_ID } from '@/constants/app';
+import type { ExtConfig } from '@/services/act/common/type';
+import { getActBaseConfig } from '@/lib/services/serverActData';
 
 interface Props {
   children: React.ReactNode
@@ -44,7 +45,7 @@ const ActLayout = async ({ children }: Props) => {
 
   const actEndTime = actBaseConfig.res.endTime
 
-  const extConfig = str2Json(actBaseConfig.res.extConfig)
+  const extConfig = str2Json(actBaseConfig.res.extConfig) as ExtConfig
 
   const buttons = [
     { text: "榜单", link: '/act/ranking' },
@@ -55,7 +56,7 @@ const ActLayout = async ({ children }: Props) => {
     <div className='w-screen min-h-screen h-full mx-auto overflow-x-hidden'>
       <main className={twMerge('relative w-full h-full bg-[#2d060f]')}>
         <ActBannerForActConfig
-          actBannerConfig={extConfig}
+          dataConfig={extConfig.templateConfig.dataConfig}
           bannerClassName={bannerSection.bannerClassName}
           bannerTitleClassName={bannerSection.bannerTitleClassName}
         />

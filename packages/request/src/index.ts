@@ -35,7 +35,7 @@ class Request {
 
     const { needUserInfo = true } = extraParams || {}
 
-    // const isAppEnv = !!appBridge?.isAppEnv()
+    const isAppEnv = !!appBridge?.isAppEnv()
 
     const headers = {
       "Content-Type": "application/json",
@@ -45,7 +45,7 @@ class Request {
       "X-Uid": 999,
       "X-Authorization": 999,
       "X-AppTag": "Boli",
-      // "X-RequestSource": isAppEnv ? "web" : "h5",
+      "X-RequestSource": isAppEnv ? "web" : "h5",
     }
 
     Object.assign(headers, defaultHeaders)
