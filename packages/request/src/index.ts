@@ -19,10 +19,6 @@ let appBridge: any = null
 const isWindow = typeof window !== "undefined"
 
 class Request {
-  // private userInfo: UserInfoRes = defaultUserInfo
-  // private userInfoPromise: Promise<UserInfoRes> | null = null
-  // private lastFetchTime: number = 0
-  // private readonly CACHE_DURATION = 30 * 60 * 1000 // 30分钟缓存
 
   constructor() {
     // 在客户端环境下动态导入
@@ -32,40 +28,6 @@ class Request {
       })
     }
   }
-
-  // private async fetchUserInfo() {
-  //   try {
-  //     const response = await fetch(getBaseApiUrl("/api/web/user/info"), { method: "POST" })
-  //     const data = await response.json()
-  //     this.userInfo = data
-  //     this.lastFetchTime = Date.now()
-  //     return data
-  //   } catch (error) {
-  //     console.error("Failed to fetch user info:", error)
-  //     return defaultUserInfo
-  //   }
-  // }
-
-  // private async getUserInfo() {
-  //   const now = Date.now()
-
-  //   // 检查缓存是否有效
-  //   if (this.userInfo && now - this.lastFetchTime < this.CACHE_DURATION) {
-  //     return this.userInfo
-  //   }
-
-  //   // 如果正在获取，返回正在进行的请求
-  //   if (this.userInfoPromise) {
-  //     return this.userInfoPromise
-  //   }
-
-  //   // 创建新的请求
-  //   this.userInfoPromise = this.fetchUserInfo().finally(() => {
-  //     this.userInfoPromise = null
-  //   })
-
-  //   return this.userInfoPromise
-  // }
 
   interceptorsRequest<T>({ url, method, params, extraParams }: Props<T>) {
     let queryParams = ""
