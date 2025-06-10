@@ -59,11 +59,13 @@ class Request {
     }
 
     Object.assign(headers, defaultHeaders, globalExtraHeaders)
+    console.log("🚀 ~ Request ~ defaultHeaders:", headers)
 
     if (needUserInfo && isWindow && isAppEnv) {
       const appHeaders = appBridge.getRequestHeaders()
       Object.assign(headers, appHeaders)
     }
+    console.log("🚀 ~ Request ~ headers:", headers)
 
     const { cacheTime, ...realParams } = params || {}
 

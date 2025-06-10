@@ -3,6 +3,8 @@ FROM node:20-alpine AS builder
 
 # 设置应用名称
 ARG APP_NAME=charm-anchor
+# 从 docker-compose 接收环境变量
+ARG ENV
 
 WORKDIR /app
 
@@ -31,7 +33,7 @@ RUN pnpm install
 COPY . .
 
 # 构建应用
-RUN pnpm turbo build --filter=${APP_NAME}
+RUN pnpm turbo build${ENV:+:${ENV}} --filter=${APP_NAME}
 
 # 阶段 2: 运行阶段
 FROM node:20-alpine AS runner
@@ -43,7 +45,7 @@ ARG PORT=3300
 WORKDIR /app
 
 # 设置环境变量
-ENV NODE_ENV=production
+ENV NODE_ENV=test
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=${PORT}
 

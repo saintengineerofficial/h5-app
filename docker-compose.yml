@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   # Nginx 反向代理服务
@@ -26,6 +26,8 @@ services:
     build:
       context: . # 构建上下文是 monorepo 根目录
       dockerfile: apps/charm-anchor/Dockerfile # 指定 Dockerfile 位置
+      args:
+        - ENV=${ENV}
     image: my-app/charm-anchor:${TAG}
     container_name: charm-anchor-${ENV}
     restart: unless-stopped
@@ -35,7 +37,6 @@ services:
       - ./apps/charm-anchor/.env.${ENV}
     networks:
       - boli-network
-
 
   # ===============================================================
   # 为未来的应用预留位置
