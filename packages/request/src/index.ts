@@ -27,14 +27,14 @@ export function setGlobalRequestHeaders(headers: Record<string, string>) {
   globalExtraHeaders = headers
 }
 class Request {
-  // constructor() {
-  //   // 在客户端环境下动态导入
-  //   if (isWindow) {
-  //     import("@yg/app-bridge").then(module => {
-  //       appBridge = module.default
-  //     })
-  //   }
-  // }
+  constructor() {
+    // 在客户端环境下动态导入
+    if (isWindow) {
+      import("@yg/app-bridge").then(module => {
+        appBridge = module.default
+      })
+    }
+  }
 
   interceptorsRequest<T>({ url, method, params, extraParams }: Props<T>) {
     let queryParams = ""
@@ -60,10 +60,10 @@ class Request {
 
     Object.assign(headers, defaultHeaders, globalExtraHeaders)
 
-    // if (needUserInfo && isWindow && isAppEnv) {
-    //   const appHeaders = appBridge.getRequestHeaders()
-    //   Object.assign(headers, appHeaders)
-    // }
+    if (needUserInfo && isWindow && isAppEnv) {
+      const appHeaders = appBridge.getRequestHeaders()
+      Object.assign(headers, appHeaders)
+    }
 
     const { cacheTime, ...realParams } = params || {}
 

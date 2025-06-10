@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 
-// import appBridge from '@yg/app-bridge';
+import appBridge from '@yg/app-bridge';
 
 import ActDecorateAvatar from '@/components/act/ActDecorateAvatar';
 import BackgroundSectionAsync from '@/components/client/BackgroundSectionAsync'
@@ -31,8 +31,8 @@ type Props = {
 }
 
 const ActRanking = ({ rankingItem, rank, config }: Props) => {
-  // const currentUid = appBridge.getAppUid()
-  // const finalImagePath = currentUid === rankingItem.uid ? config.backgroundActiveImagePath : config.backgroundImagePath
+  const currentUid = appBridge.getAppUid()
+  const finalImagePath = currentUid === rankingItem.uid ? config.backgroundActiveImagePath : config.backgroundImagePath
   return (
     <BackgroundSectionAsync imagePath={config.backgroundImagePath} className={config.backgroundClassName}>
       <div className='w-full flex items-center px-[62px] pt-[20px]'>
