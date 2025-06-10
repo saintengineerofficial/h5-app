@@ -34,7 +34,7 @@ COPY . .
 
 # 构建应用
 ENV NODE_ENV=${ENV:-production}
-RUN pnpm turbo build --filter=${APP_NAME}
+RUN pnpm turbo build:${ENV} --filter=${APP_NAME}
 
 # 阶段 2: 运行阶段
 FROM node:20-alpine AS runner
@@ -46,7 +46,7 @@ ARG PORT=3300
 WORKDIR /app
 
 # 设置环境变量
-ENV NODE_ENV=test
+ENV NODE_ENV=${ENV:-production}
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=${PORT}
 
