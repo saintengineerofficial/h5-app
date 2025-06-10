@@ -33,7 +33,8 @@ RUN pnpm install
 COPY . .
 
 # 构建应用
-RUN pnpm turbo build${ENV:+:${ENV}} --filter=${APP_NAME}
+ENV NODE_ENV=${ENV:-production}
+RUN pnpm turbo build --filter=${APP_NAME}
 
 # 阶段 2: 运行阶段
 FROM node:20-alpine AS runner
