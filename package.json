@@ -17,6 +17,7 @@
   "devDependencies": {
     "@repo/hooks": "workspace:*",
     "@repo/request": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.6.1",
     "ts-node": "^10.0.0",

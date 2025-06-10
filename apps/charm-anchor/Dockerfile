@@ -21,6 +21,8 @@ COPY apps/${APP_NAME}/package.json ./apps/${APP_NAME}/
 # 如果有共享的 packages，复制它们的 package.json
 COPY packages/hooks/package.json ./packages/hooks/
 COPY packages/request/package.json ./packages/request/
+COPY packages/typescript-config/package.json ./packages/typescript-config/
+COPY packages/typescript-config/*.json ./packages/typescript-config/
 
 # 安装所有依赖，遵循锁文件
 RUN pnpm install
