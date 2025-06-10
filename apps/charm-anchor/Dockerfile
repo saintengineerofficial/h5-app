@@ -57,7 +57,7 @@ RUN adduser --system --uid 1001 nextjs
 # 复制构建产物，设置正确权限
 COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/static ./apps/${APP_NAME}/.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/public ./apps/${APP_NAME}/public
 
 # 切换到非 root 用户
 USER nextjs
