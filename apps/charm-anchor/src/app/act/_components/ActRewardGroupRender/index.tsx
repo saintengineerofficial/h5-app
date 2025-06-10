@@ -27,7 +27,8 @@ const titleMap: Record<number, string> = {
 const ActRewardGroupRender = ({ activitiesId }: Props) => {
   const { data: actRewardConfig, isLoading } = useQuery({
     queryKey: ['actRewardConfig', activitiesId],
-    queryFn: () => CommonActApi.getActRewardConfigProxy({ activitiesId: +activitiesId }),
+    queryFn: () => CommonActApi.getActRewardConfigProxy(),
+    staleTime: 1000 * 60 * 60,
     enabled: !!activitiesId,
   })
   const locale = useLocale().toLowerCase() as LangKey

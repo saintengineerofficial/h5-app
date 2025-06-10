@@ -42,12 +42,10 @@ const buttonTabConfig = {
 const ActLayout = async ({ children }: Props) => {
 
   const actBaseConfig = await getActBaseConfig(ACTIVITIES_ID)
-  console.log("🚀 ~ ActLayout ~ actBaseConfig:", actBaseConfig)
 
   const actEndTime = actBaseConfig.res.endTime
 
   const extConfig = str2Json(actBaseConfig.res.extConfig) as ExtConfig
-  console.log("🚀 ~ ActLayout ~ extConfig:", extConfig)
 
   const buttons = [
     { text: "榜单", link: '/act/ranking' },
