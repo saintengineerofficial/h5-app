@@ -15,8 +15,8 @@ services:
       - ${NGINX_CONF_PATH}:/etc/nginx/conf.d/default.conf:ro
       - ${NGINX_CERT_PATH}:/etc/nginx/certs:ro
     depends_on:
-      - charm-anchor
-      - red-room
+      # - charm-anchor
+      # - red-room
     restart: unless-stopped
     networks:
       - boli-network

@@ -9,10 +9,8 @@ ARG ENV
 WORKDIR /app
 
 # 安装 pnpm，指定版本以确保一致性
-RUN npm install -g pnpm@8
-
-# 配置私有 registry
-RUN pnpm config set registry https://npm-yinguo.falla.live/
+RUN npm install -g pnpm@8 && \
+    pnpm config set registry https://npm-yinguo.falla.live/
 
 # 复制 Monorepo 根目录下的关键文件，利用 Docker 层缓存
 COPY package.json pnpm-workspace.yaml turbo.json ./
