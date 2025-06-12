@@ -14,9 +14,6 @@ services:
       # 挂载我们为本地环境准备的 nginx 配置
       - ${NGINX_CONF_PATH}:/etc/nginx/conf.d/default.conf:ro
       - ${NGINX_CERT_PATH}:/etc/nginx/certs:ro
-    depends_on:
-      # - charm-anchor
-      # - red-room
     restart: unless-stopped
     networks:
       - boli-network
