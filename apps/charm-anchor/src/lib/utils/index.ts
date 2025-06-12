@@ -22,6 +22,5 @@ export function generateImport(path: string): string {
     .replace(/[-\s](\w)/g, (_, c) => c.toUpperCase()) // 转驼峰
     .replace(/^\w/, c => c.toLowerCase()) // 首字母小写
 
-  console.log(`import ${variableName} from '${path}';`)
   return `import ${variableName} from '${path}';`
 }

@@ -6,16 +6,27 @@ import { getLocale } from "."
 import { CommonActApi } from "@/services/act/common"
 
 import type { LangKey } from "@/services/type"
+import { TRANSLATE_ID } from "@/constants/app"
+
+// export async function getTranslationId() {
+//   try {
+//     const headersList = headers()
+//     const url = (await headersList).get("x-url") || ""
+//     const searchParams = new URL(url).searchParams
+//     return searchParams.get("translateId")
+//   } catch {
+//     throw new Error("Failed to get translation id")
+//   }
+// }
 
 export default getRequestConfig(async () => {
   const locale = (await getLocale()) as LangKey
-  const translateId = process.env.NEXT_PUBLIC_TRANSLATE_ID!
 
   let messages = {}
   try {
-    const data = await CommonActApi.getTranslations({ translateId: Number(translateId) })
-    console.log("🚀 ~ 当前语言 ~ locale:", locale)
-    console.log("🚀 ~ 翻译文件 ~ message:", data)
+    const data = await CommonActApi.getTranslations({ translateId: TRANSLATE_ID })
+    // console.log("🚀 ~ 当前语言 ~ locale:", locale)
+    // console.log("🚀 ~ 翻译文件 ~ message:", data)
 
     messages = data[locale] || {}
   } catch (error) {

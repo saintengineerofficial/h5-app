@@ -2,7 +2,6 @@ import type { PropsWithChildren } from 'react';
 
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
-import getConfig from 'next/config';
 
 interface BackgroundSectionProps {
   imagePath: string;

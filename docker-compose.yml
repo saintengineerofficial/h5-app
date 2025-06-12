@@ -38,22 +38,19 @@ services:
     networks:
       - boli-network
 
-  # ===============================================================
-  # 为未来的应用预留位置
-  # 当你准备好部署 red-room 应用时，取消下面的注释
-  # 别忘了在上面的 nginx `depends_on` 中也取消注释
-  # ===============================================================
-  # red-room:
-  #   build:
-  #     context: .
-  #     dockerfile: apps/red-room/Dockerfile
-  #   image: my-app/red-room:${TAG}
-  #   container_name: red-room-${ENV}
-  #   restart: unless-stopped
-  #   env_file:
-  #     - ${ENV_FILE_RED_ROOM}
-  #   networks:
-  #     - boli-network
+  red-room:
+    build:
+      context: .
+      dockerfile: apps/red-room/Dockerfile
+      args:
+        - ENV=${ENV}
+    image: my-app/red-room:${TAG}
+    container_name: red-room-${ENV}
+    restart: unless-stopped
+    env_file:
+      - ./apps/red-room/.env.${ENV}
+    networks:
+      - boli-network
 
 # 定义一个网络，让所有服务可以互相通信
 networks:

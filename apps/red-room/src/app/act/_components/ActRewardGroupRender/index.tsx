@@ -18,7 +18,7 @@ const ActRewardGroupRender = ({ activitiesId }: Props) => {
 
   const { data: actRewardConfig, isLoading } = useQuery({
     queryKey: ['actRewardConfig', activitiesId],
-    queryFn: () => CommonActApi.getActRewardConfig({ activitiesId: +activitiesId }),
+    queryFn: () => CommonActApi.getActRewardConfig({ activitiesId }),
     enabled: !!activitiesId,
   })
   const { rewardItemConfig } = ActRewardGroupRenderConfig

@@ -37,6 +37,10 @@ const PodiumRankingConfigs = [
 ]
 const ActPodiumRankingGroup = ({ rankingList }: Props) => {
 
+  if (!rankingList.length) {
+    return null
+  }
+
   return (
     <div className='h-[650px] flex items-start relative'>
       <ActPodiumRanking rankingItem={rankingList[1]} config={PodiumRankingConfigs[1]} />

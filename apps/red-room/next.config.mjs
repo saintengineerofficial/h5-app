@@ -11,14 +11,7 @@ const withNextIntl = createNextIntlPlugin({
 const nextConfig = {
   output: "standalone",
   basePath: "/red-room",
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "silkroad-res.resygg.com",
-      },
-    ],
-  },
+  assetPrefix: "/red-room",
   terserOptions: {
     compress: {
       drop_console: true,
@@ -27,6 +20,21 @@ const nextConfig = {
       passes: 3, // 多次优化
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "silkroad-res.resygg.com",
+      },
+      {
+        protocol: "https",
+        hostname: "web.boli.live",
+      },
+    ],
+  },
+  poweredByHeader: false,
+  generateEtags: true,
+  compress: true,
   eslint: {
     ignoreDuringBuilds: true,
   },

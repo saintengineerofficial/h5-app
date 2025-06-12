@@ -13,6 +13,7 @@ import { ActRewardGroupRenderConfig } from './config'
 import { CommonActApi } from '@/services/act/common'
 
 import type { LangKey } from '@/services/type'
+import DataEmptyError from '@/components/global/DataEmptyError'
 
 type Props = {
   activitiesId: number
@@ -25,12 +26,13 @@ const titleMap: Record<number, string> = {
 }
 
 const ActRewardGroupRender = ({ activitiesId }: Props) => {
-  const { data: actRewardConfig, isLoading } = useQuery({
+  const { data: actRewardConfig, error, isLoading, isError } = useQuery({
     queryKey: ['actRewardConfig', activitiesId],
-    queryFn: () => CommonActApi.getActRewardConfigProxy(),
+    queryFn: () => CommonActApi.getActRewardConfigProxy({ activitiesId }),
     staleTime: 1000 * 60 * 60,
     enabled: !!activitiesId,
   })
+
   const locale = useLocale().toLowerCase() as LangKey
 
   const { rewardItemConfig } = ActRewardGroupRenderConfig
@@ -47,6 +49,10 @@ const ActRewardGroupRender = ({ activitiesId }: Props) => {
         containerClassName='px-[60px]'
         cardClassName={rewardItemConfig.backgroundImageClassName} />
     )
+  }
+
+  if (isError) {
+    return <DataEmptyError error={error} />
   }
 
   return (

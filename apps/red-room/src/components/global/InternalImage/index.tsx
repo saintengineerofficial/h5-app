@@ -5,7 +5,7 @@ import React, { useRef } from 'react';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 
-import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import { useIntersectionObserver } from '@repo/hooks';
 
 export interface ImageProps {
   src: string;

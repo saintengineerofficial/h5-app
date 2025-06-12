@@ -10,16 +10,20 @@ const withNextIntl = createNextIntlPlugin({
 
 const nextConfig = {
   output: "standalone",
+  basePath: "/charm-anchor",
+  assetPrefix: "/charm-anchor",
   images: {
     remotePatterns: [
       {
         protocol: "https",
         hostname: "silkroad-res.resygg.com",
       },
+      {
+        protocol: "https",
+        hostname: "web.boli.live",
+      },
     ],
   },
-  basePath: "/charm-anchor",
-  assetPrefix: "/charm-anchor",
   poweredByHeader: false,
   generateEtags: true,
   compress: true,

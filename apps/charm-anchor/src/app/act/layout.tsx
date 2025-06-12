@@ -13,7 +13,7 @@ import { str2Json } from '@/lib/utils/format-util'
 import { formatTimestamp } from '@/lib/utils/time-utils';
 import { ACTIVITIES_ID } from '@/constants/app';
 import type { ExtConfig } from '@/services/act/common/type';
-import { getActBaseConfig } from '@/lib/services/serverActData';
+import { CommonActApi } from '@/services/act/common';
 
 interface Props {
   children: React.ReactNode
@@ -41,7 +41,7 @@ const buttonTabConfig = {
 
 const ActLayout = async ({ children }: Props) => {
 
-  const actBaseConfig = await getActBaseConfig(ACTIVITIES_ID)
+  const actBaseConfig = await CommonActApi.getActConfig({ activitiesId: ACTIVITIES_ID })
 
   const actEndTime = actBaseConfig.res.endTime
 
@@ -51,10 +51,6 @@ const ActLayout = async ({ children }: Props) => {
     { text: "榜单", link: '/act/ranking' },
     { text: "奖励", link: '/act/reward' },
   ]
-
-  if (!extConfig) {
-    console.error("dataConfig 为空！");
-  }
 
   return (
     <div className='w-screen min-h-screen h-full mx-auto overflow-x-hidden'>

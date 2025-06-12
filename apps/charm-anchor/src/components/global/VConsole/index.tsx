@@ -1,4 +1,4 @@
-'use client'; // 声明为客户端组件
+'use client';
 
 import { useEffect } from 'react';
 

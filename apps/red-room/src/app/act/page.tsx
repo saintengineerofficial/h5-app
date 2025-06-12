@@ -13,6 +13,7 @@ import ActDecorateContainer from './_components/ActDecorateContainer'
 import ActRewardGroupRender from './_components/ActRewardGroupRender'
 
 import type { Metadata } from 'next'
+import { ACTIVITIES_ID } from '@/constants/app'
 
 
 export const revalidate = 60
@@ -25,9 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const Page = async () => {
-  const activitiesId = process.env.NEXT_PUBLIC_ACTIVITIES_ID!
   const t = await getTranslations();
-
   try {
     return (
       <div className="w-full">
@@ -35,7 +34,7 @@ const Page = async () => {
           <div className='flex flex-col'>
             <ActTopTitle className='h-[200px]' title={t('reward')} />
             <Suspense fallback={<Skeleton className='w-[750px] h-[200px]' />}>
-              <ActRewardGroupRender activitiesId={+activitiesId} />
+              <ActRewardGroupRender activitiesId={ACTIVITIES_ID} />
             </Suspense>
             <Space h='h-[10px]' />
             <ActProgrssBar current={3} total={5} className='m-auto' />

@@ -1,8 +1,9 @@
 import { getBaseApiUrl, getConfigBaseApiUrl } from "@/lib/utils"
-import request from "@/services/request"
 
 import type { ActConfigParams, ActConfigRes, RewardConfigV3Res, ServerTimeRes, TranslationsParams, TranslationsRes } from "./type"
 import type { CommonApiRes } from "@/services/type"
+import request from "@repo/request"
+import { ACTNAME } from "@/constants/app"
 
 export const CommonActApi = {
   getActConfig(params: ActConfigParams) {
@@ -16,9 +17,12 @@ export const CommonActApi = {
     )
   },
   getActRewardConfigProxy(params: ActConfigParams) {
-    return request.get<RewardConfigV3Res>(
-      `/api/act-reward-config?activitiesId=${params.activitiesId}`,
-      { cacheTime: 1000 * 60 * 60 * 24 },
+    return request.get<RewardConfigV3Res, ActConfigParams>(
+      `/${ACTNAME}/api/act-reward-config`,
+      {
+        cacheTime: 1000 * 60 * 60 * 24,
+        activitiesId: params.activitiesId,
+      },
       { needUserInfo: false }
     )
   },

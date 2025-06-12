@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 
 import ActButton from '@/components/act/ActButton'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   buttons: { text: string, link: string }[]
@@ -18,12 +19,11 @@ type Props = {
 
 const ActButtonTab = ({ buttons, imagePath, activeImagePath, className, textClassName, activeTextClassName }: Props) => {
   const pathname = usePathname();
+  const router = useRouter();
 
   const isActive = useMemoizedFn((link: string) => {
-
     return link.includes(pathname);
   })
-
 
   return (
     <div className='w-full flex items-center justify-between'>
@@ -33,8 +33,10 @@ const ActButtonTab = ({ buttons, imagePath, activeImagePath, className, textClas
             key={button.link}
             imagePath={isActive(button.link) ? activeImagePath : imagePath}
             buttonText={button.text}
-            link={button.link}
             className={twMerge(className, textClassName, isActive(button.link) && activeTextClassName)}
+            onClick={() => {
+              router.replace(button.link)
+            }}
           />
         ))
       }

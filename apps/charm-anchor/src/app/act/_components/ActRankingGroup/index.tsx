@@ -3,7 +3,7 @@ import React from 'react'
 import ActRanking from './ActRanking'
 
 import type { RankingItem } from '../../_lib/api/type'
-
+import DataEmptyError from '@/components/global/DataEmptyError'
 type Props = {
   rankingList: RankingItem[]
 }
@@ -23,6 +23,10 @@ const config = {
 }
 
 const ActRankingGroup = ({ rankingList }: Props) => {
+  if (!rankingList.length) {
+    return <DataEmptyError data={rankingList} />
+  }
+
   return (
     <div className='w-full flex flex-col gap-[5px]'>
       {rankingList.map((item, index) => (

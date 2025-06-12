@@ -1,48 +1,69 @@
-# 构建阶段
+# 阶段 1: 构建 Next.js 应用
 FROM node:20-alpine AS builder
 
-# 设置工作目录
+# 设置应用名称
+ARG APP_NAME=red-room
+# 从 docker-compose 接收环境变量
+ARG ENV
+
 WORKDIR /app
 
-# 安装 pnpm
-RUN npm install -g pnpm@8.15.5
+# 安装 pnpm，指定版本以确保一致性
+RUN npm install -g pnpm@8
 
-# 复制 package.json 和 pnpm-lock.yaml
-COPY package.json pnpm-lock.yaml ./
-COPY pnpm-workspace.yaml ./
-COPY apps/red-room/package.json ./apps/red-room/
-COPY packages/ ./packages/
+# 配置私有 registry
+RUN pnpm config set registry https://npm-yinguo.falla.live/
 
-# 安装依赖
+# 复制 Monorepo 根目录下的关键文件，利用 Docker 层缓存
+COPY package.json pnpm-workspace.yaml turbo.json ./
+
+# 复制当前 Next.js 应用的 package.json
+COPY apps/${APP_NAME}/package.json ./apps/${APP_NAME}/
+
+# 如果有共享的 packages，复制它们的 package.json
+COPY packages/hooks/package.json ./packages/hooks/
+COPY packages/request/package.json ./packages/request/
+COPY packages/typescript-config/package.json ./packages/typescript-config/
+COPY packages/typescript-config/*.json ./packages/typescript-config/
+
+# 安装所有依赖，遵循锁文件
 RUN pnpm install
 
-# 复制源代码
+# 复制整个 Monorepo 源代码
 COPY . .
 
 # 构建应用
-RUN pnpm build --filter red-room
+ENV NODE_ENV=${ENV:-production}
+RUN pnpm turbo build:${ENV} --filter=${APP_NAME}
 
-# 生产阶段
+# 阶段 2: 运行阶段
 FROM node:20-alpine AS runner
+
+# 设置应用名称和端口
+ARG APP_NAME=red-room
+ARG PORT=3301
 
 WORKDIR /app
 
-# 安装 pnpm
-RUN npm install -g pnpm@8.15.5
-
-# 复制必要文件
-COPY --from=builder /app/apps/red-room/next.config.js ./
-COPY --from=builder /app/apps/red-room/public ./public
-COPY --from=builder /app/apps/red-room/.next ./.next
-COPY --from=builder /app/apps/red-room/package.json ./
-COPY --from=builder /app/node_modules ./node_modules
-
 # 设置环境变量
-ENV NODE_ENV=production
-ENV PORT=3001
+ENV NODE_ENV=${ENV:-production}
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=${PORT}
+
+# 创建非 root 用户
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# 复制构建产物，设置正确权限
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/.next/static ./apps/${APP_NAME}/.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/${APP_NAME}/public ./apps/${APP_NAME}/public
+
+# 切换到非 root 用户
+USER nextjs
 
 # 暴露端口
-EXPOSE 3001
+EXPOSE ${PORT}
 
-# 启动应用
-CMD ["pnpm", "start"] 
+# 运行 server.js
+CMD ["node", "apps/red-room/server.js"]

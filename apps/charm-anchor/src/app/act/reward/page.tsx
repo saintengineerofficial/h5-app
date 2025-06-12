@@ -9,7 +9,6 @@ import ActRewardGroupRender from '../_components/ActRewardGroupRender'
 import { ACTIVITIES_ID } from '@/constants/app';
 
 const Page = () => {
-
   return (
     <div className='w-full'>
       <ActDecorateContainer isOnlyContent containerType="Reward" className='z-10'>

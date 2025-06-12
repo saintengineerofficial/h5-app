@@ -8,6 +8,7 @@ import SkeletonGrid from '@/components/global/SkeletonGrid'
 import ActPodiumRankingGroup from '../../_components/ActPodiumRankingGroup'
 import ActRankingGroup from '../../_components/ActRankingGroup'
 import { ActApi } from '../../_lib/api'
+import DataEmptyError from '@/components/global/DataEmptyError'
 
 type Props = {
   activitiesId: number
@@ -15,7 +16,7 @@ type Props = {
 
 const ActRankRender = ({ activitiesId }: Props) => {
 
-  const { data, isLoading } = useQuery({
+  const { data, error, isLoading, isError } = useQuery({
     queryKey: ['rankingList', activitiesId],
     queryFn: () => ActApi.getRanking(),
   })
@@ -26,8 +27,12 @@ const ActRankRender = ({ activitiesId }: Props) => {
         columns={1}
         rows={10}
         containerClassName='px-[60px] w-full pt-[150px]'
-        cardClassName='w-[600px] h-[200px]' />
+        cardClassName='w-[600px] h-[100px]' />
     )
+  }
+
+  if (isError) {
+    return <DataEmptyError error={error} />
   }
 
   return (
