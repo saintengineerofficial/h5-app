@@ -9,8 +9,12 @@ ARG ENV
 WORKDIR /app
 
 # 安装 pnpm，指定版本以确保一致性
-RUN npm install -g pnpm@8 && \
-    pnpm config set registry https://npm-yinguo.falla.live/
+RUN apk add --no-cache --virtual .build-deps curl && \
+    npm install -g pnpm@8 && \
+    pnpm config set registry https://npm-yinguo.falla.live/ && \
+    apk del .build-deps && \
+    npm cache clean --force
+
 
 # 复制 Monorepo 根目录下的关键文件，利用 Docker 层缓存
 COPY package.json pnpm-workspace.yaml turbo.json ./
@@ -25,7 +29,8 @@ COPY packages/typescript-config/package.json ./packages/typescript-config/
 COPY packages/typescript-config/*.json ./packages/typescript-config/
 
 # 安装所有依赖，遵循锁文件
-RUN pnpm install
+RUN pnpm install --prod && \
+    pnpm store prune
 
 # 复制整个 Monorepo 源代码
 COPY . .
