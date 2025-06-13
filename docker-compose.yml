@@ -25,10 +25,10 @@ services:
       dockerfile: apps/charm-anchor/Dockerfile # 指定 Dockerfile 位置
       args:
         - ENV=${ENV}
-    image: my-app/charm-anchor:${TAG}
+    image: boli-app/charm-anchor:${TAG}
     container_name: charm-anchor-${ENV}
     restart: unless-stopped
-    # 端口由 Dockerfile 中的 ENV 和 EXPOSE 定义 (3000)
+    # 端口由 Dockerfile 中的 ENV 和 EXPOSE 定义
     # 无需在这里暴露端口到主机，Nginx 通过内部网络访问它
     env_file:
       - ./apps/charm-anchor/.env.${ENV}
@@ -41,7 +41,7 @@ services:
       dockerfile: apps/red-room/Dockerfile
       args:
         - ENV=${ENV}
-    image: my-app/red-room:${TAG}
+    image: boli-app/red-room:${TAG}
     container_name: red-room-${ENV}
     restart: unless-stopped
     env_file:
